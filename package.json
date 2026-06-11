@@ -1,0 +1,15 @@
+{
+  "name": "rohim-portfolio",
+  "version": "1.0.0",
+  "description": "Premium glassmorphism portfolio with built-in admin panel.",
+  "scripts": {
+    "dev": "npx -y http-server -p 3000"
+  },
+  "keywords": [
+    "portfolio",
+    "glassmorphism",
+    "admin"
+  ],
+  "author": "Ahmad Nur Rochim",
+  "license": "ISC"
+}
