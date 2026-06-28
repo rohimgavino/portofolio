@@ -4,44 +4,87 @@
 
 const INITIAL_LINKS = [
     {
-        id: "seed-1",
-        title: "Nike Store Redesign SaaS",
-        url: "https://github.com",
+        id: "repo-umkm-tools",
+        title: "UMKM Tools",
+        url: "https://github.com/rohimgavino/umkm-tools",
+        secondaryUrl: "https://rohimgavino.github.io/umkm-tools/",
         category: "project",
-        theme: "violet",
-        desc: "E-commerce platform modern dengan stack Next.js, Stripe, dan Tailwind CSS. Memiliki performa cepat dan integrasi checkout instant."
+        theme: "emerald",
+        desc: "Kumpulan aplikasi statis untuk UMKM, termasuk stok barang dan generator invoice/struk yang bisa langsung dipakai dari browser."
     },
     {
-        id: "seed-2",
-        title: "Developer Analytics Dashboard",
-        url: "https://github.com",
+        id: "repo-kaspilot-landing",
+        title: "Kaspilot Landing",
+        url: "https://github.com/rohimgavino/kaspilot-landing",
         category: "project",
         theme: "cyan",
-        desc: "Dashboard monitoring metrik server, beban CPU, dan grafik pengunjung realtime menggunakan WebSocket dan Chart.js."
+        desc: "Landing page produk KasPilot dengan tampilan modern untuk memperkenalkan solusi kasir dan operasional bisnis."
     },
     {
-        id: "seed-3",
-        title: "LinkedIn Professional Profile",
-        url: "https://linkedin.com",
-        category: "social",
-        theme: "cyan",
-        desc: "Mari terhubung secara profesional di LinkedIn untuk berkolaborasi, berdiskusi tentang teknologi, atau membahas peluang karir."
-    },
-    {
-        id: "seed-4",
-        title: "Personal GitHub Repository",
-        url: "https://github.com",
-        category: "social",
+        id: "repo-digital-marketing-academy",
+        title: "Digital Marketing Academy",
+        url: "https://github.com/rohimgavino/digital-marketing-academy",
+        category: "project",
         theme: "violet",
-        desc: "Repositori tempat saya menyimpan semua kode sumber proyek open-source, eksperimen kecil, dan kontribusi komunitas saya."
+        desc: "Kurikulum digital marketing interaktif 24 minggu dengan progress tracker, toolkit, dan ebook."
     },
     {
-        id: "seed-5",
-        title: "Figma UI/UX Design Space",
-        url: "https://figma.com",
-        category: "other",
+        id: "repo-productivity-muslim",
+        title: "Productivity Muslim",
+        url: "https://github.com/rohimgavino/Productivity-Muslim",
+        category: "project",
+        theme: "amber",
+        desc: "Aplikasi produktivitas bernuansa Islami untuk membantu rutinitas dan pengelolaan aktivitas harian."
+    },
+    {
+        id: "repo-belajar-arab",
+        title: "Belajar Arab",
+        url: "https://github.com/rohimgavino/belajar-arab",
+        category: "project",
         theme: "rose",
-        desc: "Koleksi mockup aplikasi web/mobile, sistem desain, dan wireframe kreatif yang saya rancang dengan fokus pada kegunaan."
+        desc: "Proyek pembelajaran bahasa Arab gundul dengan pendekatan latihan dan materi sederhana."
+    },
+    {
+        id: "repo-fundamental-python",
+        title: "Fundamental Python",
+        url: "https://github.com/rohimgavino/fundamental-python",
+        category: "project",
+        theme: "cyan",
+        desc: "Kumpulan materi dan latihan dasar Python untuk belajar pemrograman dari fondasi."
+    },
+    {
+        id: "repo-request-jadwal",
+        title: "Request Jadwal",
+        url: "https://github.com/rohimgavino/request-jadwal",
+        secondaryUrl: "https://request-jadwal.vercel.app",
+        category: "project",
+        theme: "emerald",
+        desc: "Aplikasi untuk memudahkan request jadwal bulanan dengan halaman live yang bisa langsung digunakan."
+    },
+    {
+        id: "repo-jadwal-supportpb",
+        title: "Jadwal SupportPB",
+        url: "https://github.com/rohimgavino/jadwal-supportpb",
+        secondaryUrl: "https://jadwal-supportpb.vercel.app",
+        category: "project",
+        theme: "violet",
+        desc: "Aplikasi jadwal support untuk membantu pengaturan request dan kebutuhan jadwal rutin."
+    },
+    {
+        id: "repo-web-jadwal",
+        title: "Web Jadwal",
+        url: "https://github.com/rohimgavino/Web-Jadwal",
+        category: "project",
+        theme: "amber",
+        desc: "Aplikasi web sederhana untuk kebutuhan request dan pengelolaan jadwal."
+    },
+    {
+        id: "seed-github-profile",
+        title: "GitHub Rohim Gavino",
+        url: "https://github.com/rohimgavino",
+        category: "social",
+        theme: "violet",
+        desc: "Profil GitHub utama yang berisi kumpulan repo, eksperimen, dan proyek aplikasi yang sedang dikembangkan."
     }
 ];
 
@@ -50,6 +93,13 @@ let portfolioLinks = JSON.parse(localStorage.getItem('rohim_portfolio_links'));
 if (!portfolioLinks || portfolioLinks.length === 0) {
     portfolioLinks = INITIAL_LINKS;
     localStorage.setItem('rohim_portfolio_links', JSON.stringify(portfolioLinks));
+} else {
+    const existingIds = new Set(portfolioLinks.map(link => link.id));
+    const missingSeedLinks = INITIAL_LINKS.filter(link => !existingIds.has(link.id));
+    if (missingSeedLinks.length > 0) {
+        portfolioLinks = [...missingSeedLinks, ...portfolioLinks];
+        localStorage.setItem('rohim_portfolio_links', JSON.stringify(portfolioLinks));
+    }
 }
 
 // Current filter and edit state
@@ -148,9 +198,14 @@ function renderPortfolioCards() {
                 </div>
                 <div class="card-footer">
                     <a href="${escapeHTML(link.url)}" target="_blank" class="card-btn">
-                        <span>Kunjungi Link</span>
+                        <span>${link.url.includes('github.com') ? 'GitHub' : 'Kunjungi Link'}</span>
                         <i data-lucide="arrow-right"></i>
                     </a>
+                    ${link.secondaryUrl ? `
+                    <a href="${escapeHTML(link.secondaryUrl)}" target="_blank" class="card-btn">
+                        <span>Live Demo</span>
+                        <i data-lucide="external-link"></i>
+                    </a>` : ''}
                 </div>
             </article>
         `;
