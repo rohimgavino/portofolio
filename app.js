@@ -129,6 +129,7 @@ const linkForm = document.getElementById('linkForm');
 const editLinkId = document.getElementById('editLinkId');
 const linkTitle = document.getElementById('linkTitle');
 const linkUrl = document.getElementById('linkUrl');
+const linkSecondaryUrl = document.getElementById('linkSecondaryUrl');
 const linkCategory = document.getElementById('linkCategory');
 const linkTheme = document.getElementById('linkTheme');
 const linkDesc = document.getElementById('linkDesc');
@@ -371,6 +372,7 @@ function resetForm() {
     editLinkId.value = '';
     linkTitle.value = '';
     linkUrl.value = '';
+    linkSecondaryUrl.value = '';
     linkCategory.value = 'project';
     linkTheme.value = 'violet';
     linkDesc.value = '';
@@ -389,6 +391,7 @@ linkForm.addEventListener('submit', (e) => {
     const newLinkData = {
         title: linkTitle.value.trim(),
         url: linkUrl.value.trim(),
+        secondaryUrl: linkSecondaryUrl.value.trim() || undefined,
         category: linkCategory.value,
         theme: linkTheme.value,
         desc: linkDesc.value.trim()
@@ -428,6 +431,7 @@ window.initiateEdit = function(id) {
     editLinkId.value = link.id;
     linkTitle.value = link.title;
     linkUrl.value = link.url;
+    linkSecondaryUrl.value = link.secondaryUrl || '';
     linkCategory.value = link.category;
     linkTheme.value = link.theme;
     linkDesc.value = link.desc;
